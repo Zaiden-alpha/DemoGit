@@ -1,0 +1,31 @@
+CREATE TABLE Entity(
+    Id UNIQUEIDENTIFIER DEFAULT NEWSEQUENTIALID(),  
+    Name NVARCHAR(50) NOT NULL,
+    Level INT NOT NULL DEFAULT 1,
+
+    Hp INT NOT NULL,
+    Strength INT NOT NULL,
+    Stamina INT NOT NULL,
+
+    ClassId UNIQUEIDENTIFIER NOT NULL,
+
+    CONSTRAINT PK_Entity  PRIMARY KEY (Id),
+    CONSTRAINT  UK_Name UNIQUE(Name),
+    
+);
+
+CREATE TABLE Class (
+    Id UNIQUEIDENTIFIER DEFAULT NEWSEQUENTIALID(),
+    Name NVARCHAR(50),
+
+
+    BonusStrength INT,
+    BonusStamina INT,
+
+    CONSTRAINT PK_Class PRIMARY KEY (Id)
+);
+
+--Relation 1..N pour l'Entity -> Class 
+
+ALTER TABLE Entity
+ADD CONSTRAINT FK_Entity_Class  FOREIGN KEY (ClassId) REFERENCES Class (Id) ON DELETE CASCADE
